@@ -98,3 +98,67 @@ tbody tr:nth-child(even) {
   width: 90%;
   max-width: 400px;
 }
+
+/* 7. Navigation bar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--rainbows-light-blue);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.navbar-content {
+  max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--rainbows-red);
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar-link {
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  color: var(--rainbows-dark-blue);
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.navbar-link:hover {
+  background: var(--rainbows-yellow);
+}
+
+.navbar-link.active {
+  background: var(--rainbows-red);
+  color: var(--surface-white);
+}
+
+/* 8. Content container */
+.content-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  margin-top: 6rem; /* ensure content not hidden under fixed navbar */
+}
