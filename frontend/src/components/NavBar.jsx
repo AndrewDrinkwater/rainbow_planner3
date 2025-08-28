@@ -7,18 +7,13 @@ export default function NavBar() {
   return (
     <nav className="navbar">
       <div className="navbar-content">
-        <div className="navbar-brand">
+        <NavLink to="/" className="navbar-brand">
           <span role="img" aria-label="rainbow">
             🌈
           </span>
           <span className="brand-name">Rainbow Planner</span>
-        </div>
+        </NavLink>
         <ul className="navbar-links">
-          <li>
-            <NavLink to="/" end className={linkClass}>
-              Home
-            </NavLink>
-          </li>
           <li>
             <NavLink to="/enquiries" className={linkClass}>
               Enquiries
