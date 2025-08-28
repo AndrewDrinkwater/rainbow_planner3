@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import AddEnquiryForm from "./AddEnquiryForm";
+import AddEnquiryModal from "./AddEnquiryModal";
 
 export default function EnquiriesList() {
   const [enquiries, setEnquiries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const loadEnquiries = () => {
     fetch("/api/enquiries")
@@ -44,41 +45,89 @@ export default function EnquiriesList() {
 
   return (
     <div>
-      <AddEnquiryForm
-        onAdded={(newEnquiry) =>
-          setEnquiries((prev) => [newEnquiry, ...prev])
-        }
-      />
+      <button
+        onClick={() => setShowModal(true)}
+        className="mb-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+      >
+        Add Enquiry
+      </button>
+
+      {showModal && (
+        <AddEnquiryModal
+          onClose={() => setShowModal(false)}
+          onAdded={() => {
+            setShowModal(false);
+            loadEnquiries();
+          }}
+        />
+      )}
 
       <h2 className="text-xl font-bold mb-4">Enquiries</h2>
       {enquiries.length === 0 ? (
         <p>No enquiries yet.</p>
       ) : (
-        <ul className="space-y-2">
-          {enquiries.map((e) => (
-            <li
-              key={e.id}
-              className="border p-3 rounded flex justify-between items-center"
-            >
-              <div>
-                <p className="font-semibold">{e.name}</p>
-                <p className="text-sm text-gray-600">
-                  Status: {e.status_label || "Unknown"} | DOB:{" "}
-                  {new Date(e.dob).toLocaleDateString()}
-                </p>
-              </div>
-              {e.status_label !== "Promoted" && (
-                <button
-                  onClick={() => promote(e.id)}
-                  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                >
-                  Promote
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
+        <div className="overflow-x-auto">
+          <table className="min-w-full border">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="p-2 border">ID</th>
+                <th className="p-2 border">Name</th>
+                <th className="p-2 border">DOB</th>
+                <th className="p-2 border">Enquiry Date</th>
+                <th className="p-2 border">Status ID</th>
+                <th className="p-2 border">Status</th>
+                <th className="p-2 border">Created</th>
+                <th className="p-2 border">Updated</th>
+                <th className="p-2 border">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {enquiries.map((e) => (
+                <tr key={e.id} className="text-center">
+                  <td className="p-2 border">{e.id}</td>
+                  <td className="p-2 border">{e.name}</td>
+                  <td className="p-2 border">
+                    {new Date(e.dob).toLocaleDateString()}
+                  </td>
+                  <td className="p-2 border">
+                    {new Date(e.enquiry_date).toLocaleDateString()}
+                  </td>
+                  <td className="p-2 border">{e.status_id}</td>
+                  <td className="p-2 border">{e.status_label || "Unknown"}</td>
+                  <td className="p-2 border">
+                    {new Date(e.created_at).toLocaleDateString()}
+                  </td>
+                  <td className="p-2 border">
+                    {new Date(e.updated_at).toLocaleDateString()}
+                  </td>
+                  <td className="p-2 border">
+                    {e.status_label !== "Promoted" && (
+                      <select
+                        defaultValue=""
+                        onChange={(ev) => {
+                          if (ev.target.value === "promote") {
+                            ev.target.value = "";
+                            if (window.confirm("Promote this enquiry?")) {
+                              promote(e.id);
+                            }
+                          }
+                        }}
+                        className="border rounded px-2 py-1"
+                      >
+                        <option value="" disabled>
+                          Actions
+                        </option>
+                        <option value="promote">Promote</option>
+                      </select>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
 }
+
