@@ -1,68 +1,100 @@
+/* Import font from Google Fonts (fallback if @fontsource is buggy) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* 1. Rainbow brand palette (inspired by Girlguiding Rainbows) */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --rainbows-red: #E0002C;        /* main accent red */
+  --rainbows-light-blue: #C6E8F7; /* light sky blue */
+  --rainbows-dark-blue: #233B91;  /* deep guiding blue for text */
+  --rainbows-yellow: #FFD600;     /* bright highlight */
+  --surface-white: #FFFFFF;
+  --surface-light: #F8FAFC;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-family: 'Poppins', sans-serif;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+/* 2. Reset / base */
+* {
+  box-sizing: border-box;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+}
+body {
+  font-family: var(--font-family);
+  background: var(--surface-light);
+  color: var(--rainbows-dark-blue);
+  line-height: 1.5;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* 3. Headings */
+h1, h2, h3 {
+  font-weight: 600;
+  color: var(--rainbows-red);
 }
 
+/* 4. Buttons */
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  font-family: var(--font-family);
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: border-color 0.25s;
+  padding: 0.5rem 1rem;
+  transition: background 0.2s;
 }
-button:hover {
-  border-color: #646cff;
+.btn-primary {
+  background-color: var(--rainbows-red);
+  color: var(--surface-white);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.btn-primary:hover {
+  background-color: #b80024;
+}
+.btn-secondary {
+  background-color: var(--rainbows-light-blue);
+  color: var(--rainbows-dark-blue);
+}
+.btn-secondary:hover {
+  background-color: #a3d6ec;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* 5. Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface-white);
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+  overflow: hidden;
+}
+thead {
+  background-color: var(--rainbows-light-blue);
+}
+thead th {
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--rainbows-dark-blue);
+}
+tbody td {
+  padding: 0.6rem;
+  border-top: 1px solid #ddd;
+}
+tbody tr:nth-child(even) {
+  background: #f3f7fb;
+}
+
+/* 6. Modal styling */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(35, 59, 145, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: var(--surface-white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
 }
