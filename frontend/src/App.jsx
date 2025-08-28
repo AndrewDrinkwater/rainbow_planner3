@@ -9,7 +9,7 @@ function App() {
     <Router>
       <NavBar />
       {/* push content down so it's not hidden under fixed nav */}
-      <div className="max-w-4xl mx-auto p-6 pt-24">
+      <div className="content-container">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/enquiries" element={<EnquiriesPage />} />
